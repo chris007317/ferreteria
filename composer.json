@@ -1,0 +1,24 @@
+{
+    "name": "user/sisredcamp",
+    "description": "Plataforma para la gestión de datos del sistema de reservas",
+    "type": "preject",
+    "autoload": {
+        "psr-4": {
+            "MVC\\" : "./",
+            "Response\\" : "./response",
+            "Request\\" : "./request",
+            "Controllers\\" : "./controllers",
+            "Model\\" : "./models",
+            "Enum\\" : "./enum",
+            "Classes\\" : "./classes"
+        }
+    },
+    "authors": [
+        {
+            "name": "Christian Vilca Justiniano"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

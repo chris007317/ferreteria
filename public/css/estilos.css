@@ -1,0 +1,96 @@
+.nav-link-icon{
+	width: 1.15rem;
+}
+
+.img-qr{
+	max-width: 220px;
+	max-height: 220px
+}
+
+.alerta{
+	position: fixed;
+	top: 70px;
+	right: 14px;
+	max-width: 300px;
+	opacity: 0;
+	transition: opacity .4s ease-out;
+	z-index: 1060;
+}
+
+.alerta .alert{
+	background: var(--tblr-body-bg);
+}
+
+.mostrar-alerta{
+	opacity: 1;
+}
+
+.alerta-icono{
+	font-size: 24px;
+}
+
+.link-activo{
+    background: var(--tblr-navbar-active-bg);
+}
+
+#formBuscar button{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+tbody, tbody .btn{
+	font-size: .8rem;
+	padding: 8px 10px;
+}
+
+@media(min-width: 575.98px){	
+	tbody, tbody .btn{
+		font-size: .65rem;
+	}
+}
+
+@media(min-width: 780px){
+	.alerta{	
+		max-width: 350px;
+	}
+
+	tbody, tbody .btn{
+		font-size: .75rem;
+		padding: 8px 10px;
+	}
+}
+
+@media(min-width: 1200px){
+	.markdown>table thead th, .table thead th{
+		font-size: .66rem;
+	}
+
+	.horario-tabla{
+		min-width: 102px;
+	}
+}
+
+@media(max-width: 575.98px){
+	.table-mobile-sm td{
+		padding-top: .45rem !important;		
+		padding-bottom: .45rem !important;
+	}
+
+	.tabla-reserva-modal tbody{
+		font-size: .72rem;
+	}
+
+	.tabla-reserva-modal tr td:last-child, .tabla-reserva-modal tr th:last-child{
+		padding-right: 0;
+	}
+
+	.tabla-reserva-modal tr td:first-child, .tabla-reserva-modal tr th:first-child{
+		padding-left: 0;
+	}
+}
+
+@media(max-width: 780px){
+		.markdown>table thead th, .table thead th{
+		font-size: .58rem;
+	}
+}

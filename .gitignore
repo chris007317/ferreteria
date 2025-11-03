@@ -1,0 +1,31 @@
+# Dependencias de Composer
+/vendor/
+composer.lock
+
+# Configuración de entornos locales
+.env
+.env.local
+.env.development
+.env.production
+.env.*.local
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs y caché
+*.log
+logs/
+cache/
+
+# Configuración IDEs y editores
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos de depuración y backups
+*.bak
+*.swp
+*.swo
+*.~*
