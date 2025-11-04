@@ -1,4 +1,4 @@
-<div class="page-header d-print-none px-3">
+}<div class="page-header d-print-none px-3">
   <div class="container-xl">
     <div class="mb-4">
       <ol class="breadcrumb" aria-label="breadcrumbs">
@@ -95,7 +95,7 @@
             <div class="col-12 col-sm-5 col-md-4">
               <label class="form-label" for="txtDocumentoProveedor">RUC *</label>
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="Buscar documento" id="txtDocumentoProveedor" minlength="0" maxlength="11" pattern="^[0-9]+" name="txtDocumentoProveedor" required>
+                <input type="text" class="form-control" placeholder="Buscar documento" id="txtDocumentoProveedor" minlength="11" maxlength="11" pattern="^[0-9]+" name="txtDocumentoProveedor" required>
                 <button class="btn" type="button" id="btnBuscar" data-icono='<i class="fas fa-search"></i>'><i class="fas fa-search"></i></button>
               </div>
             </div>

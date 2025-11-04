@@ -10,6 +10,6 @@ Class BuscarCategoriaRequest{
     }
 
     public function hayFiltros(): bool {
-        return $this->cliente !== null;
+        return $this->nombre !== null;
     }	
 }

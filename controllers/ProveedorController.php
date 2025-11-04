@@ -23,7 +23,7 @@ Class ProveedorController{
 		    	'eliminado' => FALSE
 		    ],
 		    'id_proveedor' ,'DESC'
-		);		
+		);
 		$router->render('/proveedor/index',[
 			'titulo' => 'Proveedores',
 			'script' => 'proveedor',
@@ -97,11 +97,11 @@ Class ProveedorController{
 			echo json_encode(['alerta' => ['tipo' => 'error','mensaje' => 'El proveedor seleccionado no fue encontrado']]);
 			return;
 		}
+		$proveedor->sincronizar($args);
 		if($proveedor->ExisteRucProveedor()){
 			echo json_encode(['alerta' => ['tipo' => 'error','mensaje' => 'El RUC ya se encuentra registrado en otro proveedor']]);
 			return;
 		}
-		$proveedor->sincronizar($args);
 		$alertas = $proveedor->Validar();
 		if(!empty($alertas)){
 			echo json_encode(['alerta'=>[$alertas][0]]);

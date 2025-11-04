@@ -11,6 +11,8 @@ use Controllers\PersonaController;
 use Controllers\CategoriaController;
 use Controllers\ProveedorController;
 use Controllers\AlmacenController;
+use Controllers\CompraController;
+use Controllers\CompraProductoController;
 
 $router = new Router();
 
@@ -49,5 +51,13 @@ $router->get('/almacenes/seleccionar', [AlmacenController::class, 'Seleccionar']
 $router->post('/almacenes/crear', [AlmacenController::class, 'Crear'], true);
 $router->post('/almacenes/editar', [AlmacenController::class, 'Editar'], true);
 $router->post('/almacenes/cambiar-estado', [AlmacenController::class, 'CambiarEstado'], true);
+
+$router->get('/compras', [CompraController::class, 'Index'], true);
+$router->get('/compras/seleccionar', [CompraController::class, 'Seleccionar'], true);
+$router->post('/compras/crear', [CompraController::class, 'Crear'], true);
+$router->post('/compras/editar', [CompraController::class, 'Editar'], true);
+$router->post('/compras/eliminar', [CompraController::class, 'Eliminar'], true);
+
+$router->get('/compras/productos', [CompraProductoController::class, 'Index'], true);
 
 $router->comprobarRutas();

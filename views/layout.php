@@ -7,11 +7,15 @@
     <title>REDECAMP - <?php echo $titulo; ?></title>
     <!-- CSS files -->
     <link href="/css/tabler/tabler.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
     <link href="/css/estilos.css" rel="stylesheet"/>
     <!-- <link href="./dist/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
     <link href="./dist/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
     <link href="./dist/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
-    <link href="./dist/css/demo.min.css?1692870487" rel="stylesheet"/> -->
+    <link href="/css/tabler/demo.min.css" rel="stylesheet"/> 
+    -->
+
     <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {

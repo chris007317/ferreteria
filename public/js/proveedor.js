@@ -137,10 +137,10 @@ document.addEventListener("DOMContentLoaded", function(){
     const btnEliminarModal = document.getElementById('btnEnviarAccion');
     btnEliminarModal.addEventListener('click', async function(event){
         const modal = document.getElementById("modalAccion");
-        const idCategoria = modal.querySelector('input[name="idAccion"]').value;
+        const idProveedor = modal.querySelector('input[name="idAccion"]').value;
         const nuevoEstado = modal.querySelector('input[name="nuevoEstado"]').value;
         let formData = new FormData;
-        formData.append('idAccion', idCategoria);
+        formData.append('idAccion', idProveedor);
         formData.append('estado', nuevoEstado);
         try {
             const respuesta = await fetch(urlRuta + 'cambiar-estado', {method: 'POST', body: formData})
