@@ -10,16 +10,19 @@ Class BandejaCompraProductoResponse{
 	public $id_almacen_principal;
 	public $id_estado_producto;
 	public $nombre;
+	public $precio_venta;
+	public $stock;
 	public $descripcion;
 	public $nombre_almacen;
 	public $nombre_categoria;
 	public $cantidad;
 	public $precio_unitario;
+	public $costo_unitario;
 	public $estado_producto;
 	public $codigo_producto;
 
 	public function TotalProducto() : string{
-		return tipoMonedaPeru($this->cantidad * $this->precio_unitario);
+		return tipoMonedaPeru($this->cantidad * $this->costo_unitario);
 	}
 
 	public function ObtenerBadgeEstado(): string{

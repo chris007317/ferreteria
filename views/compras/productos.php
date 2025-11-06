@@ -1,4 +1,5 @@
 <?php 
+  use Enum\EstadoCompra;
   $compra = $datos['compra'];
   $proveedor = $datos['proveedor'];
  ?>
@@ -55,35 +56,12 @@
             <p class="m-0 fw-bold">Estado</p>
             <p class="m-0 fs-5" id="total"><?=$datos['estado']->getNombre()?></p>            
           </div>
-          <div class="dropdown-divider"></div>
-          <h6 class="dropdown-header">Buscar producto</h6>
-          <form id="formBuscarProducto" class="px-2">
-            <div class="mb-3">
-              <label class="form-label" for="cmbAlmacen">Almacén</label>
-              <select class="form-control" name="cmbAlmacen" id="cmbAlmacen" required>
-                <option value="" selected disabled>Seleccione una opción</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Categoría</label>
-              <select class="form-control" required>
-                <option value="" selected disabled>Seleccione una opción</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Producto</label>
-              <select class="form-control" required>
-                <option value="" selected disabled>Seleccione una opción</option>
-              </select>
-            </div>
-            <div class="d-flex justify-content-end">
-              <button class="btn btn-primary" type="submit"><i class="fa-solid fa-check me-2"></i>Seleccionar</button>
-            </div>
-          </form>
+          <?php if ($datos['estado']->getCodigo() == EstadoCompra::PENDIENTE->value): ?>
           <div class="dropdown-divider"></div>
           <div class="d-flex justify-content-end px-2 pb-3">
             <button class="btn btn-outline-primary" id="btnNuevo" data-bs-toggle="modal" data-bs-target="#modalProducto"><i class="fa-solid fa-plus me-2"></i>Producto</button>
           </div>
+          <?php endif ?>  
         </div>
       </div>
       <div class="col-12 col-sm-6 col-lg-8 col-xxl-10 card p-3">
@@ -124,9 +102,16 @@
           </tbody>
         </table>
         <div class="mt-3 d-flex justify-content-end">
-          <button type="button" class="btn btn-outline-primary" id="btnAprobarCompra">
-            Aprobar compra
-          </button>
+          <?php if ($datos['estado']->getCodigo() == EstadoCompra::PENDIENTE->value): ?>
+            <button type="button" class="btn btn-outline-primary" id="btnAprobarCompra">
+              Aprobar compra
+            </button>
+          <?php endif ?>
+          <?php if ($datos['estado']->getCodigo() == EstadoCompra::APROBADO->value): ?>
+            <button type="button" class="btn btn-outline-primary" id="btnRecibirCompra">
+              Recibir compra
+            </button>
+          <?php endif ?>
         </div>
       </div>
     </div>
@@ -142,7 +127,7 @@
       </div>
       <form id="formCompra">
         <input type="hidden" name="idCompra" value="<?=$compra->getIdCompra()?>">
-        <input type="hidden" name="idProducto" value="">
+        <input type="hidden" name="idDetalle" value="">
         <div class="modal-body">
           <div class="row mb-3 row-gap-3">
             <div class="col-12 col-sm-7">
@@ -168,13 +153,16 @@
               </select>
             </div>
             <div class="col-12 col-sm-6">
-              <label class="form-label" for="txtNombreProducto">Nombre *</label>
-              <div class="input-icon">
+              <label class="form-label" for="cmbNombreProducto">Nombre *</label>
+              <select placeholder="Seleccione categoría" id="cmbNombreProducto" name="cmbNombreProducto" required>
+                <option value="" disabled selected>Ingrese nombre</option>
+              </select>
+              <!-- <div class="input-icon">
                 <span class="input-icon-addon">
                   <i class="fa-solid fa-file-signature"></i>
                 </span>
                 <input type="text" id="txtNombreProducto" name="txtNombreProducto" value="" class="form-control" placeholder="Ingrese nombre del producto" maxlength="150" required>
-              </div>
+              </div> -->
             </div>
             <div class="col-4 col-sm-3">
               <label class="form-label" for="txtPrecioCompraProducto">Precio compra *</label>
@@ -242,6 +230,34 @@
                 Cancelar
               </button></div>
             <div class="col"><button type="button" class="btn btn-info w-100" id="btnAprobarModal">
+                Aceptar
+              </button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal modal-blur fade" id="modalRecibirCompra" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-status bg-info"></div>
+      <div class="modal-body text-center py-4">
+        <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-info icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+        <h3 id="textoAccion">Recibir compra</h3>
+        <div class="text-secondary">¿Está seguro de recibir los productos en el almacén?</div>
+      </div>
+      <div class="modal-footer">
+        <div class="w-100">
+          <input type="hidden" name="idAccion">
+          <div class="row">
+            <div class="col"><button type="button" class="btn w-100" data-bs-dismiss="modal">
+                Cancelar
+              </button></div>
+            <div class="col"><button type="button" class="btn btn-info w-100" id="btnRecibirCompraModal">
                 Aceptar
               </button></div>
           </div>

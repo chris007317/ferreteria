@@ -4,7 +4,7 @@ namespace Model;
 
 Class Producto extends ActiveRecord{
 	protected static $tabla = 'producto';
-	protected static $columnasDB = ['id_producto', 'id_categoria', 'id_almacen_principal', 'id_estado_producto', 'nombre', 'descripcion', 'precio_compra', 'precio_venta', 'stock', 'stock_minimo', 'producto_eliminado'];	
+	protected static $columnasDB = ['id_producto', 'id_categoria', 'id_almacen_principal', 'id_estado_producto', 'nombre', 'descripcion', 'precio_compra', 'precio_venta', 'stock', 'stock_minimo', 'producto_eliminado'];
 	protected $id_producto; 
 	protected $id_categoria; 
 	protected $id_almacen_principal; 
@@ -25,8 +25,8 @@ Class Producto extends ActiveRecord{
 		$this->id_estado_producto = $args['id_estado_producto'] ?? null;
 		$this->nombre = $args['nombre'] ?? null;
 		$this->descripcion = $args['descripcion'] ?? null;
-		$this->precio_compra = $args['precio_compra'] ?? null;
-		$this->precio_venta = $args['precio_venta'] ?? null;
+		$this->precio_compra = $args['precio_compra'] ?? 0;
+		$this->precio_venta = $args['precio_venta'] ?? 0;
 		$this->stock = $args['stock'] ?? null;
 	}	
 
@@ -135,14 +135,14 @@ Class Producto extends ActiveRecord{
 			self::setAlerta('error', 'No ingrese caracteres especiales en el nombre.');
 	        return self::$alertas;
 		}
-		if($this->precio_compra <= 0 || $this->precio_venta <= 0 || $this->stock <= 0){
-			self::setAlerta('error', 'El precio de venta, precio de compra o cantidad del producto deben ser mayores a cero.');
-	        return self::$alertas;
-		}
+		// if($this->precio_compra <= 0 || $this->precio_venta <= 0 || $this->stock <= 0){
+		// 	self::setAlerta('error', 'El precio de venta, precio de compra o cantidad del producto deben ser mayores a cero.');
+	    //     return self::$alertas;
+		// }
 		return self::$alertas;
 	}
 
-	public static function ListarProductoCompra($modelo){
+	public static function ListarProductoCompra($modelo, $idCompra){
 		$query = "SELECT 
 				p.id_producto,
 			    p.id_categoria,
@@ -150,10 +150,13 @@ Class Producto extends ActiveRecord{
 			    p.id_estado_producto,
 			    p.nombre,
 			    p.descripcion,
+			    p.precio_venta,
+			    p.stock,
 			    a.nombre_almacen,
 			    c.nombre AS nombre_categoria,
 			    dp.cantidad,
 			    dp.precio_unitario,
+			    dp.costo_unitario,
 			    t.nombre AS estado_producto,
 			    t.codigo AS codigo_producto
 			FROM producto p
@@ -161,7 +164,9 @@ Class Producto extends ActiveRecord{
 			INNER JOIN almacen a ON a.id_almacen = p.id_almacen_principal
 			INNER JOIN categoria c ON c.id_categoria = p.id_categoria
 			INNER JOIN tabtab t ON t.id_tabtab = id_estado_producto
-			WHERE p.producto_eliminado = FALSE
+			WHERE 
+				p.producto_eliminado = FALSE AND
+				dp.id_compra = $idCompra
 			ORDER BY p.id_producto DESC;";
 		$resultado = self::consultarSQL($query);
 		return self::convertirAFilasDeModelo($modelo, $resultado);

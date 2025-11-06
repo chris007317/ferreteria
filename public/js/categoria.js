@@ -136,5 +136,5 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Error en la petición:", error);
             mostrarAlerta("error", "Ocurrió un error, comunícate con un administrador");     
         }
-    });    
+    }); 
 });

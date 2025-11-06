@@ -39,7 +39,7 @@ class LoginController {
 			}
 			$persona = Persona::where('id_persona', $usuario->getIdPersona());
 			$_SESSION['persona_datos'] = $persona->getNombres() . ' ' . $persona->getApellidos();
-			$_SESSION['usuario_id'] = $usuario->getIdPersona();
+			$_SESSION['usuario_id'] = $usuario->getIdUsuario();
 			$_SESSION['ultima_actividad'] = time();
 			header('Location: /inicio');  
 		}

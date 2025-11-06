@@ -26,14 +26,14 @@
             </span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/espacios-deportivos" >
-          	<i class="nav-link-icon fa-solid fa-futbol"></i>
+<!--         <li class="nav-item">
+          <a class="nav-link" href="/ventas" >
+          	<i class="nav-link-icon fa-solid fa-cart-shopping"></i>
             <span class="nav-link-title">
-              Espacios deportivos
+              Ventas
             </span>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link" href="/compras" >
             <i class="nav-link-icon fa-solid fa-users-gear"></i>
@@ -62,27 +62,23 @@
           </li>
             
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false" id="menuBoletas">
-              <i class="nav-link-icon fa-solid fa-cash-register"></i>
+            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false" id="menuVentas">
+              <i class="nav-link-icon fa-solid fa-shop"></i>
               <span class="nav-link-title">
-                Facturacion
+                Ventas
               </span>
             </a>
             <div class="dropdown-menu">
               <div class="dropdown-menu-columns">
                 <div class="dropdown-menu-column">
-                  <a class="dropdown-item" href="/facturacion/comprobantes" id="empresaLink">
-                    <i class="nav-link-icon fa-solid fa-file-invoice-dollar"></i>
-                    Boletas y facturas
+                  <a class="dropdown-item" href="/ventas" id="ventasLink">
+                    <i class="nav-link-icon fa-solid fa-cart-shopping"></i>
+                    Nueva venta
                   </a>
                   <a class="dropdown-item" href="/facturacion/notas" id="notasLink">
-                    <i class="nav-link-icon fa-solid fa-credit-card"></i>
-                    Notas crédito y debito
+                    <i class="nav-link-icon fa-solid fa-list-check"></i>
+                    Historia de ventas
                   </a>
-<!--                   <a class="dropdown-item" href="/facturacion/resumen-diario" id="resumenLink">
-                    <i class="nav-link-icon fa-solid fa-credit-card"></i>
-                    Resumen diario
-                  </a> -->
                 </div>
               </div>
             </div>

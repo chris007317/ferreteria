@@ -95,17 +95,19 @@
                   </button>
                   <div class="dropdown-menu dropdown-menu-end">
                     <a class="dropdown-item btnAgregarProductos" href="/compras/productos?numero_compra=<?=$compra->numero_compra?>">
-                      <i class="fa-solid fa-plus me-2"></i>
-                      Agregar productos
+                      <i class="<?=$compra->ObtenerIconoProducto()?> me-2"></i>
+                      <?=$compra->ObtenerTextoProducto()?>
                     </a>
                     <button class="dropdown-item btnEditar" data-id="<?=$compra->id_compra?>">
                       <i class="fa-solid fa-edit me-2"></i>
                       Editar compra
                     </button>
-                    <button class="dropdown-item btnEliminar" data-id="<?=$compra->id_compra?>" data-accion="Eliminar compra con número : <?=$compra->numero_compra?>">
-                      <i class="fa-solid fa-xmark me-2"></i>
-                      Eliminar compra
-                    </button>
+                    <?php if ($compra->SePuedeEliminar()): ?>
+                      <button class="dropdown-item btnEliminar" data-id="<?=$compra->id_compra?>" data-accion="Eliminar compra con número : <?=$compra->numero_compra?>">
+                        <i class="fa-solid fa-xmark me-2"></i>
+                        Eliminar compra
+                      </button>
+                    <?php endif ?>
                   </div>
                 </div>
               </td>

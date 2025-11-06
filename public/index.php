@@ -13,6 +13,7 @@ use Controllers\ProveedorController;
 use Controllers\AlmacenController;
 use Controllers\CompraController;
 use Controllers\CompraProductoController;
+use Controllers\VentaController;
 
 $router = new Router();
 
@@ -59,7 +60,12 @@ $router->post('/compras/editar', [CompraController::class, 'Editar'], true);
 $router->post('/compras/eliminar', [CompraController::class, 'Eliminar'], true);
 
 $router->get('/compras/productos', [CompraProductoController::class, 'Index'], true);
+$router->get('/compras/productos/por-almacen-categoria', [CompraProductoController::class, 'SeleccionarPorCategoriaAlmacen'], true);
 $router->post('/compras/productos/crear', [CompraProductoController::class, 'Crear'], true);
 $router->post('/compras/productos/aprobar', [CompraProductoController::class, 'AprobarCompra'], true);
+$router->post('/compras/productos/recibir', [CompraProductoController::class, 'RecibirCompra'], true);
+$router->post('/compras/productos/agregar', [CompraProductoController::class, 'AgregarProducto'], true);
+
+$router->get('/ventas', [VentaController::class, 'Index'], true);
 
 $router->comprobarRutas();

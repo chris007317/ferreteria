@@ -189,4 +189,14 @@ Class Compra extends ActiveRecord {
         $resultado = self::consultarSQL($query);
         return $resultado ? true : false;
 	}
+
+	public function ActualizarDatosCompra(){
+		$query = "SELECT SUM(costo_unitario * cantidad) AS total 
+			FROM detallecompra 
+			WHERE id_compra = $this->id_compra AND detalle_eliminado = FALSE GROUP BY id_compra;";
+		$resultado = self::consultarSQL($query);
+        $this->total = isset($resultado[0]['total']) ? (int) $resultado[0]['total'] : 0;
+        $this->CalcularSubTotal();
+        return self::updateOnly();
+	}
 }

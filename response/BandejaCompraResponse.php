@@ -27,4 +27,22 @@ Class BandejaCompraResponse {
 		    default => '',
 		};
 	}
+
+	public function ObtenerTextoProducto() : string{
+		return match ($this->codigo_estado) {
+		    EstadoCompra::PENDIENTE->value => 'Agregar productos',
+		    default => 'Ver productos',
+		};
+	}
+
+	public function ObtenerIconoProducto() : string{
+		return match ($this->codigo_estado) {
+		    EstadoCompra::PENDIENTE->value => 'fa-solid fa-plus',
+		    default => 'fa-solid fa-eye',
+		};
+	}
+
+	public function SePuedeEliminar() : bool{
+		return $this->codigo_estado == EstadoCompra::PENDIENTE->value;
+	}
 }

@@ -295,7 +295,7 @@ class ActiveRecord {
     }
 
         //Insertar multiples registros
-    public function insertAll($arrValues, $filTit){
+    public function insertAll($arrValues, $filTit) : bool{
         $respuesta = false;
         try {
             $query = " INSERT INTO " . static::$tabla . " ( ";
@@ -305,7 +305,7 @@ class ActiveRecord {
                 return ":$key";
             }, array_values($filTit)));
             $query .= " ) ";
-            self::$db->beginTransaction();
+            //self::$db->beginTransaction();
             $insert = self::$db->prepare($query);
             foreach ($arrValues as $key => $value) {
                 for ($i=0; $i < count($value) ; $i++) { 
@@ -313,17 +313,17 @@ class ActiveRecord {
                 }
                 $respuesta=$insert->execute();
                 if (!$respuesta) {
-                    return 'error';
+                    return FALSE;
                     break;
                 }
             }
-            self::$db->commit();
+            //self::$db->commit();
             if ($respuesta) {
-                return 1;
+                return TRUE;
             }
         }catch (PDOException $e){
-            echo $e->getMessage();
-            self::$db->rollback();
+            //echo $e->getMessage();
+            return FALSE;
         }
     }
 
@@ -459,4 +459,46 @@ class ActiveRecord {
         return str_replace("'", "''", $v);
     }
 
+    public function updateAllObjects(array $objetos): bool
+    {
+        if (empty($objetos)) return false;
+        try {
+            foreach ($objetos as $obj) {
+                if (!($obj instanceof static)) {
+                    throw new \Exception("Objeto inválido en updateAllObjects");
+                }
+                $id = $obj->{$obj->idNombre};
+                if (is_null($id)) {
+                    throw new \Exception("Uno de los objetos no tiene ID para actualizar");
+                }
+                // Obtener atributos del objeto
+                $atributos = $obj->atributos();
+                // Solo valores seteados (no null o vacíos)
+                $setParts = [];
+                $valores = [];
+                foreach ($atributos as $key => $value) {
+                    if (!empty($value) || $value === 0) {
+                        $setParts[] = "{$key} = ?";
+                        $valores[] = $value;
+                    }
+                }
+                if (empty($setParts)) continue;
+                // Construir UPDATE
+                $sql  = "UPDATE " . static::$tabla . " SET ";
+                $sql .= implode(', ', $setParts);
+                $sql .= " WHERE " . $obj->idNombre . " = ?";
+                $sql .= " LIMIT 1";
+                // Agregar el ID al final (para el WHERE)
+                $valores[] = $id;
+                // Ejecutar
+                $stmt = self::$db->prepare($sql);
+                if (!$stmt->execute($valores)) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
 }
