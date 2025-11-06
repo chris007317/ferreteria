@@ -59,5 +59,7 @@ $router->post('/compras/editar', [CompraController::class, 'Editar'], true);
 $router->post('/compras/eliminar', [CompraController::class, 'Eliminar'], true);
 
 $router->get('/compras/productos', [CompraProductoController::class, 'Index'], true);
+$router->post('/compras/productos/crear', [CompraProductoController::class, 'Crear'], true);
+$router->post('/compras/productos/aprobar', [CompraProductoController::class, 'AprobarCompra'], true);
 
 $router->comprobarRutas();

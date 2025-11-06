@@ -271,7 +271,6 @@ class ActiveRecord {
     public function crear() {
         // Sanitizar los datos
         $atributos = $this->atributos();
-
         // Insertar en la base de datos
         $query = " INSERT INTO " . static::$tabla . " ( ";
         $query .= join(', ', array_keys($atributos));
@@ -281,6 +280,7 @@ class ActiveRecord {
         }, array_keys($atributos)));
         $query .= " ) ";
         $insert = self::$db->prepare($query);
+        
         $resInsert = $insert->execute($atributos);
         if ($resInsert) { 
             $inserId = self::$db->lastInsertId();

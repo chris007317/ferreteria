@@ -283,3 +283,7 @@ function enviarCorreo($para, $asunto, $plantilla, $de) {
 
     return mail($para, $asunto, $plantilla, $cabeceras);
 }
+
+function tipoMonedaPeru(float $monto): string {
+    return number_format($monto, 2, '.', ',');
+}
