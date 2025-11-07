@@ -74,7 +74,45 @@ use Enum\EstadoRegistro;
         // Datos listos para usar
         return $response;        
     }
-    
+
+    function buscarPersonaDni($dni) {
+        $url = $_ENV['URL_DNI'] . $dni;
+        $token = $_ENV['TOKEN_DNI'];
+
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/json",
+            "Authorization: Bearer {$token}"
+        ]);
+
+        $response = curl_exec($ch);
+        $error    = curl_error($ch);
+        curl_close($ch);
+
+        // Si hubo error de conexión
+        if ($error) {
+            $alerta['tipo'] = 'error';
+            $alerta['mensaje'] = "Error en cURL: " . $error;
+            return $alerta;
+        }
+
+        // Decodificar respuesta
+        $result = json_decode($response, true);
+
+        // Si la API devuelve error o el JSON es inválido
+        if (json_last_error() !== JSON_ERROR_NONE || empty($result) || isset($result['message'])) {
+            $alerta['tipo'] = 'error';
+            $alerta['mensaje'] = "No se encontró información para el DNI {$dni}";
+            return $alerta;
+        }
+        $alerta['tipo'] = 'ok';
+        $alerta['dato'] = $result;
+        return $alerta;
+    }
+        
     function buscarRucEmpresa($ruc) {
         $url = $_ENV['URL_RUC'] . $ruc;
         $token = $_ENV['TOKEN_DNI'];

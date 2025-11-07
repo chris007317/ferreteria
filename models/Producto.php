@@ -179,4 +179,24 @@ Class Producto extends ActiveRecord{
         $resultado = $actualizar->execute();
         return $resultado;
 	}
+
+	public static function ListarProductosActivos($modelo, $estado, $estadoProducto){
+		$query = "SELECT 
+				p.id_producto, 
+			    p.nombre, 
+			    p.precio_venta, 
+			    p.stock,
+			    a.nombre_almacen,
+    			c.nombre AS nombre_categoria
+			FROM producto p
+			INNER JOIN almacen a ON a.id_almacen = p.id_almacen_principal
+			INNER JOIN categoria c ON c.id_categoria = p.id_categoria
+			WHERE 
+				p.producto_eliminado = FALSE AND
+				p.id_estado_producto = $estadoProducto AND
+				c.id_estado_categoria = $estado AND
+			    a.id_estado_almacen = $estado;";
+	    $resultado = self::consultarSQL($query);
+		return self::convertirAFilasDeModelo($modelo, $resultado);
+	}
 }

@@ -23,7 +23,7 @@ Class CompraController{
 		$paginaActual = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 		$paginaActual = max(1, $paginaActual);
     	$porPagina = 10;
-		$estadoRegistro = TablaTabla::where('codigo', EstadoRegistro::ACTIVO->value, 'nombre', 'ASC');
+		$estadoRegistro = TablaTabla::where('codigo', EstadoRegistro::ACTIVO->value);
 		$respuesta['compras'] = Compra::BuscarCompras(
 			BandejaCompraResponse::class,
 			$paginaActual,

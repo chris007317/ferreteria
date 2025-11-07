@@ -14,6 +14,7 @@ use Controllers\AlmacenController;
 use Controllers\CompraController;
 use Controllers\CompraProductoController;
 use Controllers\VentaController;
+use Controllers\ProductoController;
 
 $router = new Router();
 
@@ -67,5 +68,7 @@ $router->post('/compras/productos/recibir', [CompraProductoController::class, 'R
 $router->post('/compras/productos/agregar', [CompraProductoController::class, 'AgregarProducto'], true);
 
 $router->get('/ventas', [VentaController::class, 'Index'], true);
+
+$router->get('/productos/seleccionar', [ProductoController::class, 'Seleccionar'], true);
 
 $router->comprobarRutas();
