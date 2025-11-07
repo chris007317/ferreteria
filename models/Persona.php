@@ -87,6 +87,7 @@ Class Persona extends ActiveRecord{
 	    	self::setAlerta('warning', 'Los apellidos deben tener como maximo 150 caracteres');
 	        return self::$alertas;
 	    }
+	    return self::$alertas;
     }
 
     public function validarDniPersona(){

@@ -134,9 +134,9 @@
                 <label class="form-label" for="cmbTipoPago">Tipo de pago *</label>
                 <select name="cmbTipoPago" id="cmbTipoPago" class="form-select" required>
                   <option value="" selected disabled>Seleccione una opción</option>
-                  <?php if ($datos['tiposDocumentos']): ?>
-                    <?php foreach ($datos['tiposDocumentos'] as $key => $tipoDocumento): ?>
-                      <option value="<?=$tipoDocumento->getCodigo()?>"><?=$tipoDocumento->getNombre()?></option>
+                  <?php if ($datos['tiposVenta']): ?>
+                    <?php foreach ($datos['tiposVenta'] as $key => $tipoVenta): ?>
+                      <option value="<?=$tipoVenta->getCodigo()?>"><?=$tipoVenta->getNombre()?></option>
                     <?php endforeach ?>
                   <?php endif ?>
                 </select>
@@ -176,6 +176,10 @@
                   </span>
                   <input type="number" id="txtDescuento" name="txtDescuento" value="0" class="form-control" placeholder="Total" step="0.01" min="0">
                 </div>
+              </div>
+              <div class="d-flex justify-content-between mb-3">
+                <p class="fw-bold m-0">Total con descuento</p>
+                <p class="m-0" id="totalConDescuento">S/. 00.00</p>
               </div>
               <div class="d-flex justify-content-end">
                 <button class="btn btn-primary"><i class="fa-solid fa-floppy-disk me-2"></i>Emitir venta</button>

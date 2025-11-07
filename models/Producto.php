@@ -199,4 +199,8 @@ Class Producto extends ActiveRecord{
 	    $resultado = self::consultarSQL($query);
 		return self::convertirAFilasDeModelo($modelo, $resultado);
 	}
+
+	public function nuevoEstock($cantidad){
+		$this->stock = $this->stock - $cantidad;
+	}
 }

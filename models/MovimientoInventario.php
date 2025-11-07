@@ -114,4 +114,21 @@ Class MovimientoInventario extends ActiveRecord{
 		$camposMovimiento = ['id_tipo_movimiento', 'id_producto', 'id_almacen', 'id_compra', 'id_usuario', 'cantidad', 'stock_anterior', 'stock_actual'];
 		return self::insertAll($datos, $camposMovimiento);
 	}
+
+	public function InsertarVariosMovimientosVenta($datos, $idVenta) : bool{
+		$columnas = ['id_tipo_movimiento', 'id_producto', 'id_almacen', 'id_venta', 'id_usuario', 'cantidad', 'stock_anterior', 'stock_actual'];
+	    $datos = array_map(function($producto) use ($idVenta) {
+	        return [
+				$producto->id_tipo_movimiento,
+				$producto->id_producto,
+				$producto->id_almacen,
+				$idVenta,
+				$producto->id_usuario,
+				$producto->id_cantidad,
+				$producto->id_stock_anterior,
+				$producto->id_stock,
+	        ];
+	    }, $datos);	    
+	    return self::insertAll($datos, $columnas);
+	}
 }
