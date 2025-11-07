@@ -75,7 +75,7 @@
                     <i class="nav-link-icon fa-solid fa-cart-shopping"></i>
                     Nueva venta
                   </a>
-                  <a class="dropdown-item" href="/facturacion/notas" id="notasLink">
+                  <a class="dropdown-item" href="/ventas/bandeja" id="notasLink">
                     <i class="nav-link-icon fa-solid fa-list-check"></i>
                     Historia de ventas
                   </a>

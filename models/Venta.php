@@ -4,7 +4,7 @@ namespace Model;
 
 Class Venta extends ActiveRecord {
 	protected static $tabla = 'venta';
-	protected static $columnasDB = ['id_venta', 'id_cliente', 'id_usuario', 'id_tipo_pago', 'numero_venta', 'fecha', 'subtotal', 'descuento', 'total', 'observaciones', 'venta_eliminado', 'igv'];
+	protected static $columnasDB = ['id_venta', 'id_cliente', 'id_usuario', 'id_tipo_pago', 'numero_venta', 'fecha', 'subtotal', 'descuento', 'total', 'observaciones', 'venta_eliminado', 'igv', 'total_descuento'];
 	protected $id_venta; 
 	protected $id_cliente; 
 	protected $id_usuario; 
@@ -131,5 +131,51 @@ Class Venta extends ActiveRecord {
 	        return self::$alertas;
 		}
 		return self::$alertas;
+	}
+
+	public static function ListarVentasRealizadas($modelo, $pagina = 1, $porPagina = 10){
+		$query = "SELECT 
+				v.id_venta, 
+			    v.id_cliente,
+			    v.id_usuario,
+			    v.id_tipo_pago,
+			    v.numero_venta,
+			    v.fecha,
+			    DATE_FORMAT(v.fecha, '%d/%m/%Y %H:%i') AS fechaVenta,
+			    v.subtotal,
+			    v.descuento,
+			    v.total,
+			    v.igv,
+			    v.total_descuento,
+				p.num_documento, 
+			    p.nombres, 
+			    p.apellidos,
+			    t0.nombre as nombre_tipo_doc,
+			    t0.codigo as codigo_tipo_doc,
+			    t1.nombre as nombre_pago,
+			    t1.codigo as codigo_pago
+			FROM venta v
+			INNER JOIN cliente c ON c.id_cliente = v.id_cliente
+			INNER JOIN personas p ON p.id_persona = c.id_cliente_persona
+			INNER JOIN tabtab t0 ON t0.id_tabtab = p.id_tipo_doc
+			INNER JOIN tabtab t1 ON t1.id_tabtab = v.id_tipo_pago
+			ORDER BY v.id_venta DESC";
+		$offset = ($pagina - 1) * $porPagina;			
+        $query .= " LIMIT {$porPagina} OFFSET {$offset}";	
+		$resultado = self::consultarSQL($query);
+		return self::convertirAFilasDeModelo($modelo, $resultado);
+	}
+
+	public static function TotaVentasRealizadas(){
+		$query = "SELECT 
+				COUNT(v.id_venta) AS total
+			FROM venta v
+			INNER JOIN cliente c ON c.id_cliente = v.id_cliente
+			INNER JOIN personas p ON p.id_persona = c.id_cliente_persona
+			INNER JOIN tabtab t0 ON t0.id_tabtab = p.id_tipo_doc
+			INNER JOIN tabtab t1 ON t1.id_tabtab = v.id_tipo_pago
+			ORDER BY v.id_venta DESC;";
+		$resultado = self::consultarSQL($query);
+        return isset($resultado[0]['total']) ? (int) $resultado[0]['total'] : 0;
 	}
 }

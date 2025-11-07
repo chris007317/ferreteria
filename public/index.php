@@ -69,6 +69,7 @@ $router->post('/compras/productos/agregar', [CompraProductoController::class, 'A
 
 $router->get('/ventas', [VentaController::class, 'Index'], true);
 $router->post('/ventas/crear', [VentaController::class, 'Crear'], true);
+$router->get('/ventas/bandeja', [VentaController::class, 'BandejaVentas'], true);
 
 $router->get('/productos/seleccionar', [ProductoController::class, 'Seleccionar'], true);
 

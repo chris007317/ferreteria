@@ -16,6 +16,8 @@ use Model\VentaDetalle;
 use Response\ListaProductosResponse;
 use Response\ProductoVentaResponse;
 use Response\MovimientoInventarioVentaResponse;
+use Response\BandejaVentaResponse;
+use Response\PaginadorResponse;
 
 use Enum\EstadoRegistro;
 use Enum\EstadoProducto;
@@ -248,5 +250,24 @@ Class VentaController {
 			return $serieBoleta;
 		}
 		return null;
-	}	
+	}
+
+	public static function BandejaVentas(Router $router){
+		$paginaActual = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+		$paginaActual = max(1, $paginaActual);
+		$porPagina = 10;
+		$respuesta['ventas'] = Venta::ListarVentasRealizadas(
+			BandejaVentaResponse::Class,
+			$paginaActual,
+			$porPagina,
+		);
+		$totalRegistros = Venta::TotaVentasRealizadas();
+		$totalPaginas =ceil($totalRegistros / $porPagina);
+		$respuesta['paginador'] = new PaginadorResponse($paginaActual, $porPagina, $totalRegistros);
+		$router->render('/ventas/bandejaventas',[
+			'titulo' => 'Ventas',
+			'script' => 'ventas-bandeja',
+			'datos' => $respuesta
+		]);
+	}
 }
